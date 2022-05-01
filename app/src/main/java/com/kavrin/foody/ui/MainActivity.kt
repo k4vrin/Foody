@@ -66,6 +66,6 @@ class MainActivity : AppCompatActivity() {
      * Navigate Up from child fragment to parent fragment
      */
     override fun onSupportNavigateUp(): Boolean {
-        return navHostFragment.navController.navigateUp() || return super.onSupportNavigateUp()
+        return navHostFragment.navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
