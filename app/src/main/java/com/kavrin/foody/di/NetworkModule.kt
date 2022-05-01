@@ -1,6 +1,6 @@
 package com.kavrin.foody.di
 
-import com.kavrin.foody.FoodRecipesApi
+import com.kavrin.foody.data.network.FoodRecipesApi
 import com.kavrin.foody.util.Constans.BASE_URL
 import dagger.Module
 import dagger.Provides

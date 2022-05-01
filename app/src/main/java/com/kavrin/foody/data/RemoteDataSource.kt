@@ -1,5 +1,6 @@
-package com.kavrin.foody
+package com.kavrin.foody.data
 
+import com.kavrin.foody.data.network.FoodRecipesApi
 import com.kavrin.foody.models.FoodRecipe
 import retrofit2.Response
 import javax.inject.Inject

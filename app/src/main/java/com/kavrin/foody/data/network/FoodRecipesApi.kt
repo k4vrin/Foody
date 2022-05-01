@@ -1,4 +1,4 @@
-package com.kavrin.foody
+package com.kavrin.foody.data.network
 
 import com.kavrin.foody.models.FoodRecipe
 import retrofit2.Response
