@@ -1,11 +1,22 @@
 package com.kavrin.foody
 
+import com.kavrin.foody.models.FoodRecipe
+import retrofit2.Response
+import javax.inject.Inject
+
 /**
  * Remote data source
  *
  * Request data from Api
  */
-class RemoteDataSource {
+class RemoteDataSource @Inject constructor(
+    private val foodRecipesApi: FoodRecipesApi // Hilt will search for FoodRecipesApi provider
+) {
+
+    suspend fun getRecipes(queries: Map<String, String>): Response<FoodRecipe> {
+        return foodRecipesApi.getRecipes(queries = queries)
+    }
+
 }
 
 
