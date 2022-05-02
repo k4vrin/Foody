@@ -11,4 +11,13 @@ import com.google.gson.annotations.SerializedName
 data class FoodRecipe(
     @SerializedName("results")
     val results: List<Result>
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (javaClass != other?.javaClass) return false
+
+        other as FoodRecipe
+
+        if (results != other.results) return false
+        return true
+    }
+}
