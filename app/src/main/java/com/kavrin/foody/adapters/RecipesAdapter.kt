@@ -1,4 +1,4 @@
-package com.kavrin.foody.adapter
+package com.kavrin.foody.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.kavrin.foody.util.RecipesDiffUtil
 
 class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
 
-    private var recipe = emptyList<Result>()
+    private var recipes = emptyList<Result>()
 
     class MyViewHolder(private val binding: RecipesRowLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -45,19 +45,20 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(result = recipe[position])
+        val currentRecipe = recipes[position]
+        holder.bind(result = currentRecipe)
     }
 
     override fun getItemCount(): Int {
-        return recipe.size
+        return recipes.size
     }
 
     fun setData(newData: FoodRecipe) {
 
-        val recipesDiffUtil = RecipesDiffUtil(oldList = recipe, newList = newData.results)
+        val recipesDiffUtil = RecipesDiffUtil(oldList = recipes, newList = newData.results)
         val recipesDiffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
 
-        recipe = newData.results
+        recipes = newData.results
 
         recipesDiffUtilResult.dispatchUpdatesTo(this)
     }
