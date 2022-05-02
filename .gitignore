@@ -45,4 +45,4 @@ google-services.json
 # Android Profiling
 *.hprof
 
-/app/src/main/java/com/kavrin/foody/util/Constans.kt
+/app/src/main/java/com/kavrin/foody/util/PrConstants.kt
