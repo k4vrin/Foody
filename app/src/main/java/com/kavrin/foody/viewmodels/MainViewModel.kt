@@ -1,4 +1,4 @@
-package com.kavrin.foody
+package com.kavrin.foody.viewmodels
 
 import android.app.Application
 import android.content.Context

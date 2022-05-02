@@ -5,22 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.kavrin.foody.MainViewModel
+import com.kavrin.foody.viewmodels.MainViewModel
 import com.kavrin.foody.adapters.RecipesAdapter
 import com.kavrin.foody.databinding.FragmentRecipesBinding
-import com.kavrin.foody.util.Constans.API_KEY
 import com.kavrin.foody.util.NetworkResult
+import com.kavrin.foody.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
     private val mMainViewModel: MainViewModel by viewModels()
+    private val mRecipesViewModel: RecipesViewModel by viewModels()
 
     private val mAdapter: RecipesAdapter by lazy { RecipesAdapter() }
 
@@ -47,7 +46,7 @@ class RecipesFragment : Fragment() {
     }
 
     private fun requestApiData() {
-        mMainViewModel.getRecipes(applyQueries())
+        mMainViewModel.getRecipes(mRecipesViewModel.applyQueries())
         mMainViewModel.recipeResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -67,19 +66,6 @@ class RecipesFragment : Fragment() {
                 is NetworkResult.Loading -> showShimmerEffect()
             }
         }
-    }
-
-    private fun applyQueries(): HashMap<String, String> {
-        val queries: HashMap<String, String> = HashMap()
-
-        queries["number"] = "50"
-        queries["apiKey"] = API_KEY
-        queries["type"] = "snack"
-        queries["diet"] = "vegan"
-        queries["addRecipeInformation"] = "true"
-        queries["fillIngredients"] = "true"
-
-        return queries
     }
 
     private fun setUpRecyclerView() {
