@@ -36,9 +36,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-}
-kapt {
-    correctErrorTypes true
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+        correctErrorTypes true
+    }
 }
 
 dependencies {

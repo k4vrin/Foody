@@ -1,4 +1,4 @@
-package com.kavrin.foody
+package com.kavrin.foody.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
