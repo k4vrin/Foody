@@ -36,6 +36,8 @@ class RecipesFragment : Fragment() {
     ): View {
         // Setup binding
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.mMainViewModel = mMainViewModel
         val view = binding.root
 
         // Initialize RecyclerView
