@@ -6,9 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.kavrin.foody.R
@@ -51,13 +52,16 @@ class RecipesFragment : Fragment() {
      * View Models must be retrieved through the ViewModelProvider API.
      * This is checked at compile time by Hilt.
      */
-    private val mMainViewModel: MainViewModel by viewModels()
-    private val mRecipesViewModel: RecipesViewModel by viewModels()
+    private val mMainViewModel: MainViewModel by activityViewModels()
+    private val mRecipesViewModel: RecipesViewModel by activityViewModels()
 
     private val mAdapter: RecipesAdapter by lazy { RecipesAdapter() }
 
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
+
+    // Receiving args from BottomSheet
+    private val args by navArgs<RecipesFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -113,7 +117,7 @@ class RecipesFragment : Fragment() {
              * else request data from api and cache it to database
              */
             mMainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
-                if (database.isNotEmpty()) {
+                if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     Log.d("RecipesFragment", "ReadDatabase Called")
                     mAdapter.setData(database[ROW_DEFAULT_ID].foodRecipe)
                     hideShimmerEffect()
