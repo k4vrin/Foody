@@ -3,6 +3,10 @@ package com.kavrin.foody.models
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Result
+ * Create data model to parse our sample JSON data with following structure.
+ */
 data class Result(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
@@ -58,5 +62,24 @@ data class Result(
         if (glutenFree != other.glutenFree) return false
 
         return true
+    }
+
+    override fun hashCode(): Int {
+        var result = aggregateLikes
+        result = 31 * result + cheap.hashCode()
+        result = 31 * result + dairyFree.hashCode()
+        result = 31 * result + extendedIngredients.hashCode()
+        result = 31 * result + glutenFree.hashCode()
+        result = 31 * result + id
+        result = 31 * result + image.hashCode()
+        result = 31 * result + readyInMinutes
+        result = 31 * result + sourceName.hashCode()
+        result = 31 * result + sourceUrl.hashCode()
+        result = 31 * result + summary.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + vegan.hashCode()
+        result = 31 * result + vegetarian.hashCode()
+        result = 31 * result + veryHealthy.hashCode()
+        return result
     }
 }

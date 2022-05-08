@@ -5,9 +5,15 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kavrin.foody.models.FoodRecipe
 
+/**
+ * Recipes type converter
+ *
+ * We can not insert complex objects in our database directly
+ * instead we need to convert them to acceptable types
+ */
 class RecipesTypeConverter {
 
-    val gson = Gson()
+    private val gson = Gson()
 
     @TypeConverter
     fun foodRecipeToString(foodRecipe: FoodRecipe): String {

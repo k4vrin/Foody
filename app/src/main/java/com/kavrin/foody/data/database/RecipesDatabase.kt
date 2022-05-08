@@ -9,4 +9,6 @@ import androidx.room.TypeConverters
 abstract class RecipesDatabase : RoomDatabase() {
 
     abstract fun recipesDao(): RecipesDao
+
+    // Database builder will be inside the database module to tell how to provide it for consumers
 }

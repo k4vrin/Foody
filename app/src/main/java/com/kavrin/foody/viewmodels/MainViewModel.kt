@@ -20,16 +20,25 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val repository: Repository,
     application: Application
-) : AndroidViewModel(application) {
+) : AndroidViewModel(application) { // Because we need application context
 
     /********************************  ROOM DATABASE  *********************************************/
 
     val readRecipes: LiveData<List<RecipesEntity>> = repository.local.readDatabase().asLiveData()
 
-    private fun insertRecipes(recipesEntity: RecipesEntity) = viewModelScope.launch(Dispatchers.IO) {
-        repository.local.insertRecipes(recipesEntity)
-    }
+    private fun insertRecipes(recipesEntity: RecipesEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertRecipes(recipesEntity)
+        }
 
+    /**
+     * Offline cache recipes
+     *
+     * @param foodRecipe
+     *
+     * If FoodRecipes from [getRecipesSafeCall] is not null, it will be inserted to database
+     * and will be read by [readRecipes]
+     */
     private fun offlineCacheRecipes(foodRecipe: FoodRecipe) {
         val recipeEntity = RecipesEntity(foodRecipe)
         insertRecipes(recipeEntity)
@@ -48,18 +57,18 @@ class MainViewModel @Inject constructor(
 
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         _recipesResponse.value = NetworkResult.Loading()
-        if (hasInternetConnection()) {
+        if (hasInternetConnection()) { // Than we want to make GET request to our Api
             try {
-                val response = repository.remote.getRecipes(queries = queries)
+                val response = repository.remote.getRecipes(queries = queries) // Actual GET request
                 _recipesResponse.value = handleFoodRecipesResponse(response)
-                /** Cache Data */
+                /****** Cache Data ******/
                 val foodRecipe = _recipesResponse.value?.data
                 if (foodRecipe != null) offlineCacheRecipes(foodRecipe)
-                /** Cache Data */
+                /****** Cache Data ******/
             } catch (e: Exception) {
                 _recipesResponse.value = NetworkResult.Error(message = "Recipes not found.")
             }
-        } else {
+        } else { // Otherwise Error
             _recipesResponse.value = NetworkResult.Error(message = "No Internet Connection.")
         }
     }
@@ -72,7 +81,7 @@ class MainViewModel @Inject constructor(
             // API key got limited
             response.code() == 402 -> NetworkResult.Error(message = "API key limited.")
             // Response is successful but results is empty
-            response.body()!!.results.isNullOrEmpty() -> NetworkResult.Error(message = "Recipes not found.")
+            response.body()!!.results.isNullOrEmpty() -> NetworkResult.Error(message = "Recipes not found.") // If body is null, it will be handled in getRecipesSafeCall
             // Successful!
             response.isSuccessful -> {
                 val foodRecipes = response.body()
@@ -88,7 +97,7 @@ class MainViewModel @Inject constructor(
      * Check the internet connection
      */
     private fun hasInternetConnection(): Boolean {
-        val connectivityManager = getApplication<Application>()
+        val connectivityManager = getApplication<Application>() // AndroidViewModel
             .getSystemService(
                 Context.CONNECTIVITY_SERVICE // Use with getSystemService() to retrieve a ConnectivityManager for handling management of network connections.
             ) as ConnectivityManager
@@ -101,5 +110,4 @@ class MainViewModel @Inject constructor(
             else -> false
         }
     }
-
 }

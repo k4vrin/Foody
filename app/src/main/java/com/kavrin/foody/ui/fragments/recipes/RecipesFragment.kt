@@ -15,15 +15,42 @@ import com.kavrin.foody.R
 import com.kavrin.foody.viewmodels.MainViewModel
 import com.kavrin.foody.adapters.RecipesAdapter
 import com.kavrin.foody.databinding.FragmentRecipesBinding
+import com.kavrin.foody.util.Constants.ROW_DEFAULT_ID
 import com.kavrin.foody.util.NetworkResult
 import com.kavrin.foody.util.observeOnce
 import com.kavrin.foody.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+
+/**
+ * Recipes fragment
+ *
+ * Once Hilt is set up in your Application class and an application-level component is available,
+ * Hilt can provide dependencies to other Android classes that have the @AndroidEntryPoint annotation.
+ *
+ * If you annotate an Android class with @AndroidEntryPoint, then you also must annotate Android classes
+ * that depend on it. For example, if you annotate a fragment, then you must also annotate any activities
+ * where you use that fragment.
+ *
+ * @AndroidEntryPoint generates an individual Hilt component for each Android class in your project.
+ * These components can receive dependencies from their respective parent classes as described in Component hierarchy.
+ *
+ *  Note: The following exceptions apply to Hilt support for Android classes:
+ *    Hilt only supports activities that extend ComponentActivity, such as AppCompatActivity.
+ *    Hilt only supports fragments that extend androidx.Fragment.
+ *    Hilt does not support retained fragments.
+ */
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
+    /**
+     * Warning: Even though the view model has an @Inject constructor,
+     * it is an error to request it from Dagger directly (for example, via field injection)
+     * since that would result in multiple instances.
+     * View Models must be retrieved through the ViewModelProvider API.
+     * This is checked at compile time by Hilt.
+     */
     private val mMainViewModel: MainViewModel by viewModels()
     private val mRecipesViewModel: RecipesViewModel by viewModels()
 
@@ -45,8 +72,10 @@ class RecipesFragment : Fragment() {
         // Initialize RecyclerView
         setUpRecyclerView()
 
+        // Show data or error
         readDatabase()
 
+        // Navigate to BottomSheet
         binding.recipesFab.setOnClickListener {
             findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
         }
@@ -54,7 +83,7 @@ class RecipesFragment : Fragment() {
         return view
     }
 
-    /**********************************************************************************************/
+    /************************************* RecyclerView *******************************************/
 
     private fun setUpRecyclerView() {
         val recyclerView = binding.recyclerView
@@ -74,14 +103,19 @@ class RecipesFragment : Fragment() {
         binding.recyclerView.hideShimmer()
     }
 
-    /**********************************************************************************************/
+    /************************************* ROOM Database *******************************************/
 
     private fun readDatabase() {
         lifecycleScope.launch {
+            /**
+             * Observe the database once
+             * if it's not empty show it
+             * else request data from api and cache it to database
+             */
             mMainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
                 if (database.isNotEmpty()) {
                     Log.d("RecipesFragment", "ReadDatabase Called")
-                    mAdapter.setData(database[0].foodRecipe)
+                    mAdapter.setData(database[ROW_DEFAULT_ID].foodRecipe)
                     hideShimmerEffect()
                 } else {
                     requestApiData()
@@ -90,25 +124,28 @@ class RecipesFragment : Fragment() {
         }
     }
 
+    /*************************************** Retrofit **********************************************/
+
     private fun requestApiData() {
         Log.d("RecipesFragment", "RequestApiData Called")
         mMainViewModel.getRecipes(mRecipesViewModel.applyQueries())
+        // Observe response and act accordingly
         mMainViewModel.recipeResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     hideShimmerEffect()
                     response.data?.let { mAdapter.setData(it) }
                 }
-
                 is NetworkResult.Error -> {
-                    /** Cache Data */
+                    /** Load Data From Cache */
+                    // Data is cached in MainViewModel
                     loadDataFromCache()
-                    /** Cache Data */
+                    /** Load Data From Cache */
                     hideShimmerEffect()
                     Snackbar.make(
                         requireContext(),
                         binding.root,
-                        response.message.toString(),
+                        response.message.toString(), // The message is handled by NetworkResult in MainViewModel
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
@@ -121,6 +158,7 @@ class RecipesFragment : Fragment() {
         lifecycleScope.launch {
             mMainViewModel.readRecipes.observe(viewLifecycleOwner) { database ->
                 if (database.isNotEmpty()) mAdapter.setData(database[0].foodRecipe)
+                // Else will be handled in RecipesBinding by make the visibility of error image and text visible
             }
         }
     }

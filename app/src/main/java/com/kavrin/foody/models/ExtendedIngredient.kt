@@ -3,6 +3,11 @@ package com.kavrin.foody.models
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Extended ingredient
+ *
+ * Create data model to parse our sample JSON data with following structure.
+ */
 data class ExtendedIngredient(
     @SerializedName("amount")
     val amount: Double,

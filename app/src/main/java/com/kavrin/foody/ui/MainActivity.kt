@@ -10,10 +10,29 @@ import com.kavrin.foody.R
 import com.kavrin.foody.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Main Activity
+ *
+ * Once Hilt is set up in your Application class and an application-level component is available,
+ * Hilt can provide dependencies to other Android classes that have the @AndroidEntryPoint annotation.
+ *
+ * If you annotate an Android class with @AndroidEntryPoint, then you also must annotate Android classes
+ * that depend on it. For example, if you annotate a fragment, then you must also annotate any activities
+ * where you use that fragment.
+ *
+ * @AndroidEntryPoint generates an individual Hilt component for each Android class in your project.
+ * These components can receive dependencies from their respective parent classes as described in Component hierarchy.
+ *
+ *  Note: The following exceptions apply to Hilt support for Android classes:
+ *      Hilt only supports activities that extend ComponentActivity, such as AppCompatActivity.
+ *      Hilt only supports fragments that extend androidx.Fragment.
+ *      Hilt does not support retained fragments.
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     // Setup binding
     private lateinit var binding: ActivityMainBinding
+
     // NavHostFragment
     private lateinit var navHostFragment: NavHostFragment
 
@@ -26,7 +45,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         // Setup Fragments
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         /**
