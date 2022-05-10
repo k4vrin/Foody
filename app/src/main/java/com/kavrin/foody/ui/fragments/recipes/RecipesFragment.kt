@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +19,12 @@ import com.kavrin.foody.viewmodels.MainViewModel
 import com.kavrin.foody.adapters.RecipesAdapter
 import com.kavrin.foody.databinding.FragmentRecipesBinding
 import com.kavrin.foody.util.Constants.ROW_DEFAULT_ID
+import com.kavrin.foody.util.NetworkListener
 import com.kavrin.foody.util.NetworkResult
 import com.kavrin.foody.util.observeOnce
 import com.kavrin.foody.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -63,6 +67,8 @@ class RecipesFragment : Fragment() {
     // Receiving args from BottomSheet
     private val args by navArgs<RecipesFragmentArgs>()
 
+    private lateinit var networkListener: NetworkListener
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,12 +82,29 @@ class RecipesFragment : Fragment() {
         // Initialize RecyclerView
         setUpRecyclerView()
 
-        // Show data or error
-        readDatabase()
+        mRecipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
+            mRecipesViewModel.backOnline = it
+        }
+
+        // Initialize NetworkListener
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                networkListener = NetworkListener()
+                networkListener.checkNetworkAvailability(requireContext())
+                    .collectLatest {
+                        mRecipesViewModel.networkStatus = it
+                        showNetworkStatus(it)
+                        // Show data or error
+                        readDatabase()
+                    }
+            }
+        }
 
         // Navigate to BottomSheet
         binding.recipesFab.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            // If there is no internet the BottomSheet won't show up instead we show a snack bar
+            if (mRecipesViewModel.networkStatus) findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            else showNetworkStatus(mRecipesViewModel.networkStatus)
         }
 
         return view
@@ -118,7 +141,6 @@ class RecipesFragment : Fragment() {
              */
             mMainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
                 if (database.isNotEmpty() && !args.backFromBottomSheet) {
-                    Log.d("RecipesFragment", "ReadDatabase Called")
                     mAdapter.setData(database[ROW_DEFAULT_ID].foodRecipe)
                     hideShimmerEffect()
                 } else {
@@ -131,7 +153,6 @@ class RecipesFragment : Fragment() {
     /*************************************** Retrofit **********************************************/
 
     private fun requestApiData() {
-        Log.d("RecipesFragment", "RequestApiData Called")
         mMainViewModel.getRecipes(mRecipesViewModel.applyQueries())
         // Observe response and act accordingly
         mMainViewModel.recipeResponse.observe(viewLifecycleOwner) { response ->
@@ -168,6 +189,34 @@ class RecipesFragment : Fragment() {
     }
 
     /**********************************************************************************************/
+
+    /**
+     * Show network status
+     *
+     * Display a snack based on the status(Network status)
+     */
+    private fun showNetworkStatus(status: Boolean) {
+        if (!status) {
+            Snackbar.make(
+                requireContext(),
+                binding.root,
+                "No Internet Connection",
+                Snackbar.LENGTH_SHORT
+            ).show()
+            // It should become online
+            mRecipesViewModel.saveBackOnline(true)
+            // Internet is back & we were not online
+        } else if (status && mRecipesViewModel.backOnline){
+            Snackbar.make(
+                requireContext(),
+                binding.root,
+                "We are back online",
+                Snackbar.LENGTH_SHORT
+            ).show()
+            // Prevent Snack bar to show again
+            mRecipesViewModel.saveBackOnline(false)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

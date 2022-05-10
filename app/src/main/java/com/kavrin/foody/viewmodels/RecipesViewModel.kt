@@ -3,6 +3,7 @@ package com.kavrin.foody.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.kavrin.foody.data.DataStoreRepository
 import com.kavrin.foody.util.Constants.DEFAULT_DIET_TYPE
@@ -29,8 +30,30 @@ class RecipesViewModel @Inject constructor(
     private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
 
-    val readMealAndDietType = dataStoreRepository.readMealAndDietType
+    var networkStatus = false
+    var backOnline = false
 
+    val readMealAndDietType = dataStoreRepository.readMealAndDietType
+    val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
+
+    fun saveBackOnline(backOnline: Boolean) = viewModelScope
+        .launch(Dispatchers.IO) {
+            dataStoreRepository.saveBackOnline(backOnline)
+        }
+
+    /**
+     * Save meal and diet type
+     *
+     * Insert values to the DataStore
+     */
+    fun saveMealAndDietType(
+        mealType: String,
+        mealTypeId: Int,
+        dietType: String,
+        dietTypeId: Int
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        dataStoreRepository.saveMealAndDietType(mealType, mealTypeId, dietType, dietTypeId)
+    }
 
     fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
@@ -48,26 +71,6 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_DIET] = dietType
         queries[QUERY_RECIPE] = "true"
         queries[QUERY_INGREDIENTS] = "true"
-        Log.d("RecipesBottomSheet", "queries: $queries")
         return queries
-    }
-
-    /**
-     * Save meal and diet type
-     *
-     * @param mealType
-     * @param mealTypeId
-     * @param dietType
-     * @param dietTypeId
-     *
-     * Insert values to the DataStore
-     */
-    fun saveMealAndDietType(
-        mealType: String,
-        mealTypeId: Int,
-        dietType: String,
-        dietTypeId: Int
-    ) = viewModelScope.launch(Dispatchers.IO) {
-        dataStoreRepository.saveMealAndDietType(mealType, mealTypeId, dietType, dietTypeId)
     }
 }
