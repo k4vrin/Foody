@@ -21,4 +21,14 @@ interface FoodRecipesApi {
     // Wrap FoodRecipe model class with HTTP Response
     ): Response<FoodRecipe>
 
+    /**
+     * Search recipes
+     *
+     * same as [getRecipes] but with different queries
+     */
+    @GET("/recipes/complexSearch")
+    suspend fun searchRecipes(
+        @QueryMap searchQueries: Map<String, String>
+    ): Response<FoodRecipe>
+
 }

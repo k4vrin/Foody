@@ -1,11 +1,9 @@
 package com.kavrin.foody.ui.fragments.recipes
 
 import android.os.Bundle
-import android.util.Log
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -47,7 +45,7 @@ import kotlinx.coroutines.launch
  *    Hilt does not support retained fragments.
  */
 @AndroidEntryPoint
-class RecipesFragment : Fragment() {
+class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {// import androidx.appcompat.widget.SearchView
 
     /**
      * Warning: Even though the view model has an @Inject constructor,
@@ -82,6 +80,13 @@ class RecipesFragment : Fragment() {
         // Initialize RecyclerView
         setUpRecyclerView()
 
+        /**
+         * Report that this fragment would like to participate in populating the options menu
+         * by receiving a call to onCreateOptionsMenu and related methods.
+         */
+        setHasOptionsMenu(true)
+
+        // Observe backOnline and assign it to variable
         mRecipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
             mRecipesViewModel.backOnline = it
         }
@@ -187,6 +192,67 @@ class RecipesFragment : Fragment() {
             }
         }
     }
+
+    /*************  Search Response  ***************/
+
+    private fun searchApiData(searchQuery: String) {
+
+        mMainViewModel.searchRecipes(mRecipesViewModel.applySearchQueries(searchQuery))
+        // Observe response and act accordingly
+        mMainViewModel.searchRecipesResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    hideShimmerEffect()
+                    response.data?.let { mAdapter.setData(it) }
+                }
+                is NetworkResult.Error -> {
+                    /** Load Data From Cache */
+                    // Data is cached in MainViewModel
+                    loadDataFromCache()
+                    /** Load Data From Cache */
+                    hideShimmerEffect()
+                    Snackbar.make(
+                        requireContext(),
+                        binding.root,
+                        response.message.toString(), // The message is handled by NetworkResult in MainViewModel
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                is NetworkResult.Loading -> showShimmerEffect()
+            }
+        }
+    }
+
+
+
+    /**
+     * On create options menu
+     *
+     * inflate search menu
+     */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.recipes_menu, menu)
+
+        // Find our menu item
+        val search = menu.findItem(R.id.menu_search)
+        // Find our widget
+        val searchView = search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        query?.let {
+            searchApiData(searchQuery = it)
+        }
+        return true
+    }
+    // We don't use it because it's expensive for performance
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return true
+    }
+
+
 
     /**********************************************************************************************/
 

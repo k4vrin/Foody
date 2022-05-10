@@ -47,6 +47,26 @@ class MainViewModel @Inject constructor(
 
     /**********************************  RETROFIT  ************************************************/
 
+    private fun handleFoodRecipesResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe> {
+        return when {
+            // Take long to respond
+            response.message().toString()
+                .contains("timeout") -> NetworkResult.Error(message = "Timeout")
+            // API key got limited
+            response.code() == 402 -> NetworkResult.Error(message = "API key limited.")
+            // Response is successful but results is empty
+            response.body()!!.results.isNullOrEmpty() -> NetworkResult.Error(message = "Recipes not found.") // If body is null, it will be handled in getRecipesSafeCall
+            // Successful!
+            response.isSuccessful -> {
+                val foodRecipes = response.body()
+                NetworkResult.Success(foodRecipes!!)
+            }
+            else -> NetworkResult.Error(message = response.message())
+        }
+    }
+
+    /*************  Recipes Response  ***************/
+
     private val _recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
     val recipeResponse: LiveData<NetworkResult<FoodRecipe>> get() = _recipesResponse
 
@@ -73,23 +93,29 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun handleFoodRecipesResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe> {
-        return when {
-            // Take long to respond
-            response.message().toString()
-                .contains("timeout") -> NetworkResult.Error(message = "Timeout")
-            // API key got limited
-            response.code() == 402 -> NetworkResult.Error(message = "API key limited.")
-            // Response is successful but results is empty
-            response.body()!!.results.isNullOrEmpty() -> NetworkResult.Error(message = "Recipes not found.") // If body is null, it will be handled in getRecipesSafeCall
-            // Successful!
-            response.isSuccessful -> {
-                val foodRecipes = response.body()
-                NetworkResult.Success(foodRecipes!!)
+    /*************  Search Response  ***************/
+
+    private val _searchRecipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+    val searchRecipesResponse: LiveData<NetworkResult<FoodRecipe>> get() =  _searchRecipesResponse
+
+    fun searchRecipes(searchQueries: Map<String, String>) = viewModelScope.launch {
+        searchRecipesSafeCall(searchQueries)
+    }
+
+    private suspend fun searchRecipesSafeCall(searchQueries: Map<String, String>) {
+        _searchRecipesResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection()) { // Than we want to make GET request to our Api
+            try {
+                val response = repository.remote.searchRecipes(searchQueries = searchQueries) // Actual GET request
+                _searchRecipesResponse.value = handleFoodRecipesResponse(response)
+            } catch (e: Exception) {
+                _searchRecipesResponse.value = NetworkResult.Error(message = "Recipes not found.")
             }
-            else -> NetworkResult.Error(message = response.message())
+        } else { // Otherwise Error
+            _searchRecipesResponse.value = NetworkResult.Error(message = "No Internet Connection.")
         }
     }
+
 
     /**
      * Has internet connection

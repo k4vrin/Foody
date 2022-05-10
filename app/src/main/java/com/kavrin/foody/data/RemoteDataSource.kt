@@ -34,10 +34,25 @@ class RemoteDataSource @Inject constructor(
      * The queries will be provided by user(BottomSheet in case of Recipes Fragment) or by default(Constants)
      *
      * @param queries
-     * @return
+     * @return Response<FoodRecipe>
      */
     suspend fun getRecipes(queries: Map<String, String>): Response<FoodRecipe> {
         return foodRecipesApi.getRecipes(queries = queries)
+    }
+
+    /**
+     * Search recipes
+     *
+     * this function will be provided for Repository class
+     * it consumes searchRecipes that is provided from foodRecipesApi by Hilt
+     *
+     * The queries will be provided by user(Search Widget)
+     *
+     * @param searchQueries
+     * @return Response<FoodRecipe>
+     */
+    suspend fun searchRecipes(searchQueries: Map<String, String>): Response<FoodRecipe> {
+        return foodRecipesApi.searchRecipes(searchQueries = searchQueries)
     }
 
 }

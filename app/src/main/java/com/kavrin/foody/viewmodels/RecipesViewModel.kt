@@ -1,7 +1,6 @@
 package com.kavrin.foody.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -15,6 +14,7 @@ import com.kavrin.foody.util.Constants.QUERY_INGREDIENTS
 import com.kavrin.foody.util.Constants.QUERY_NUMBER
 import com.kavrin.foody.util.Constants.QUERY_RECIPE
 import com.kavrin.foody.util.Constants.QUERY_TYPE
+import com.kavrin.foody.util.Constants.QUERY_SEARCH
 import com.kavrin.foody.util.PrConstants.API_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -71,6 +71,19 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_DIET] = dietType
         queries[QUERY_RECIPE] = "true"
         queries[QUERY_INGREDIENTS] = "true"
+        return queries
+    }
+
+    fun applySearchQueries(query: String): HashMap<String, String> {
+        val queries: HashMap<String, String> = HashMap()
+
+        // We do not need meal type and diet type for search
+        queries[QUERY_SEARCH] = query
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
+        queries[QUERY_RECIPE] = "true"
+        queries[QUERY_INGREDIENTS] = "true"
+
         return queries
     }
 }
