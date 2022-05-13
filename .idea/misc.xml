@@ -7,7 +7,8 @@
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/drawable/ic_error_placeholder.xml" value="0.2385" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/activity_details.xml" value="0.176" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_favorite_recipes.xml" value="0.2028985507246377" />
+        <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/favorite_recipes_row_layout.xml" value="0.4" />
+        <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_favorite_recipes.xml" value="0.4" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_food_joke.xml" value="0.2028985507246377" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_ingredients.xml" value="0.18931159420289856" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_instructions.xml" value="0.18931159420289856" />
@@ -18,6 +19,7 @@
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/placeholder_row_layout.xml" value="0.4" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/recipes_row_layout.xml" value="0.33979135618479883" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/menu/bottom_nav_menu.xml" value="0.23229166666666667" />
+        <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/menu/details_menu.xml" value="0.23229166666666667" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/menu/recipes_menu.xml" value="0.23229166666666667" />
       </map>
     </option>

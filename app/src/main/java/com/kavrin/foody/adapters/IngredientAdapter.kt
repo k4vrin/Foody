@@ -54,11 +54,11 @@ class IngredientAdapter : RecyclerView.Adapter<IngredientAdapter.MyViewHolder>()
 
     fun setData(newData: List<ExtendedIngredient>) {
 
-        val recipesDiffUtil = IngredientsDiffUtil(oldList = ingredients, newList = newData)
-        val ingredientsDiffUtil = DiffUtil.calculateDiff(recipesDiffUtil)
+        val ingredientsDiffUtil = IngredientsDiffUtil(oldList = ingredients, newList = newData)
+        val ingredientsDiffUtilResult = DiffUtil.calculateDiff(ingredientsDiffUtil)
 
         ingredients = newData
 
-        ingredientsDiffUtil.dispatchUpdatesTo(this)
+        ingredientsDiffUtilResult.dispatchUpdatesTo(this)
     }
 }
