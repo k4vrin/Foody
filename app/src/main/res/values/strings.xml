@@ -37,4 +37,8 @@
     <string name="apply">Apply</string>
     <string name="open_bottom_sheet">Open bottom sheet</string>
     <string name="search">Search</string>
+    <string name="vegetarian_icon">Vegetarian icon</string>
+    <string name="dairy_free">Dairy Free</string>
+    <string name="healthy">Healthy</string>
+    <string name="cheap">Cheap</string>
 </resources>

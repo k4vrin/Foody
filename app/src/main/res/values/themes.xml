@@ -8,7 +8,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondaryDarkColor</item>
         <item name="colorSecondaryVariant">@color/secondaryColor</item>
-        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <item name="colorOnSecondary">@color/primaryTextColor</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -18,7 +18,32 @@
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="android:textColor">@color/chip_text_color</item>
         <item name="checkedIconTint">@color/chip_text_color</item>
+    </style>
 
+    <style name="DetailsActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryDarkColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryColor</item>
+        <item name="colorOnSecondary">@color/primaryTextColor</item>
 
+        <item name="colorAccent">@color/white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+<!--        colorControlNormal change the home icon(navigate back)-->
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="background">@color/actionBarBg</item>
+        <item name="tabIndicator">@color/white</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+    </style>
+
+    <style name="CustomTabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">#BFFFFFFF</item>
     </style>
 </resources>

@@ -24,7 +24,8 @@
 <!--  Custom Chip Style  -->
     <color name="checkedChipBg">#406200EA</color>
     <color name="ChipBg">@color/lightGray</color>
-
     <color name="checkedChipText">@color/primaryColor</color>
     <color name="ChipText">@color/darkGray</color>
+
+    <color name="actionBarBg">@color/primaryColor</color>
 </resources>

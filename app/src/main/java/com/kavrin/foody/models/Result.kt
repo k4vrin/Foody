@@ -1,12 +1,16 @@
 package com.kavrin.foody.models
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 /**
  * Result
  * Create data model to parse our sample JSON data with following structure.
  */
+@Parcelize // To pass Result to Details Activity by safeArgs. Also id 'kotlin-parcelize' should be added
 data class Result(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
@@ -15,7 +19,7 @@ data class Result(
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
     @SerializedName("extendedIngredients")
-    val extendedIngredients: List<ExtendedIngredient>,
+    val extendedIngredients: @RawValue List<ExtendedIngredient>,
     @SerializedName("glutenFree")
     val glutenFree: Boolean,
     @SerializedName("id")
@@ -25,7 +29,7 @@ data class Result(
     @SerializedName("readyInMinutes")
     val readyInMinutes: Int,
     @SerializedName("sourceName")
-    val sourceName: String,
+    val sourceName: String?, // Can be null
     @SerializedName("sourceUrl")
     val sourceUrl: String,
     @SerializedName("summary")
@@ -38,7 +42,7 @@ data class Result(
     val vegetarian: Boolean,
     @SerializedName("veryHealthy")
     val veryHealthy: Boolean
-) {
+) : Parcelable { // To pass Result to Details Activity by safeArgs. Also id 'kotlin-parcelize' should be added
 
     override fun equals(other: Any?): Boolean {
         if (javaClass != other?.javaClass) return false
