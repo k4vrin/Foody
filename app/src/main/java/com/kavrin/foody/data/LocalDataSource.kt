@@ -1,7 +1,8 @@
 package com.kavrin.foody.data
 
 import com.kavrin.foody.data.database.RecipesDao
-import com.kavrin.foody.data.database.RecipesEntity
+import com.kavrin.foody.data.database.entities.FavoriteRecipesEntity
+import com.kavrin.foody.data.database.entities.RecipesEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -24,11 +25,29 @@ class LocalDataSource @Inject constructor(
     private val recipesDao: RecipesDao
 ) {
 
-    fun readDatabase(): Flow<List<RecipesEntity>> {
+    fun readRecipes(): Flow<List<RecipesEntity>> {
         return recipesDao.readRecipes()
     }
 
     suspend fun insertRecipes(recipesEntity: RecipesEntity) {
         recipesDao.insertRecipes(recipesEntity)
+    }
+
+    /********************************** Favorite Recipes ***************************************/
+
+    suspend fun insertFavoriteRecipes(favoriteRecipesEntity: FavoriteRecipesEntity) {
+        recipesDao.insertFavoriteRecipes(favoriteRecipesEntity)
+    }
+
+    fun readFavoriteRecipes(): Flow<List<FavoriteRecipesEntity>> {
+        return recipesDao.readFavoriteRecipes()
+    }
+
+    suspend fun deleteFavoriteRecipe(favoriteRecipesEntity: FavoriteRecipesEntity) {
+        recipesDao.deleteFavoriteRecipe(favoriteRecipesEntity)
+    }
+
+    suspend fun deleteAllFavoriteRecipes() {
+        recipesDao.deleteAllFavoriteRecipes()
     }
 }
