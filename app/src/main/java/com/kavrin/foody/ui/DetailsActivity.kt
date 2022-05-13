@@ -13,6 +13,7 @@ import com.kavrin.foody.databinding.ActivityDetailsBinding
 import com.kavrin.foody.ui.fragments.ingredients.IngredientsFragment
 import com.kavrin.foody.ui.fragments.instructions.InstructionsFragment
 import com.kavrin.foody.ui.fragments.overview.OverviewFragment
+import com.kavrin.foody.util.Constants.RECIPES_RESULT_KEY
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -43,7 +44,7 @@ class DetailsActivity : AppCompatActivity() {
         titles.add("Instructions")
         // Put parcelable object(Result) in the bundle
         val resultBundle = Bundle()
-        resultBundle.putParcelable("recipeBundle", args.result)
+        resultBundle.putParcelable(RECIPES_RESULT_KEY, args.result)
         // Initialize PagerAdapter
         val adapter = PagerAdapter(
             resultBundle = resultBundle,

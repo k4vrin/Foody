@@ -52,7 +52,6 @@ data class Result(
         if (id != other.id) return false
         if (title != other.title) return false
         if (sourceUrl != other.sourceUrl) return false
-        if (sourceName != other.sourceName) return false
         if (image != other.image) return false
         if (vegan != other.vegan) return false
         if (cheap != other.cheap) return false

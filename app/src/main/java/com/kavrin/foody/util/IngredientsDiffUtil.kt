@@ -1,11 +1,11 @@
 package com.kavrin.foody.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.kavrin.foody.models.Result
+import com.kavrin.foody.models.ExtendedIngredient
 
-class RecipesDiffUtil(
-    private val oldList: List<Result>,
-    private val newList: List<Result>
+class IngredientsDiffUtil(
+    private val oldList: List<ExtendedIngredient>,
+    private val newList: List<ExtendedIngredient>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -17,7 +17,7 @@ class RecipesDiffUtil(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
+        return oldList[oldItemPosition].name == newList[newItemPosition].name
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

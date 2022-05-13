@@ -9,6 +9,9 @@ object Constants {
     const val QUERY_DIET = "diet"
     const val QUERY_RECIPE = "addRecipeInformation"
     const val QUERY_INGREDIENTS = "fillIngredients"
+
+    const val RECIPES_RESULT_KEY = "recipeBundle"
+
     // Search Query
     const val QUERY_SEARCH = "query"
 

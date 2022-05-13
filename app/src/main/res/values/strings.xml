@@ -41,4 +41,5 @@
     <string name="dairy_free">Dairy Free</string>
     <string name="healthy">Healthy</string>
     <string name="cheap">Cheap</string>
+    <string name="ingredient">ingredient</string>
 </resources>

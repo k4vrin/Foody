@@ -28,4 +28,7 @@
     <color name="ChipText">@color/darkGray</color>
 
     <color name="actionBarBg">@color/primaryColor</color>
+    <color name="strokeColor">@color/lightMediumGray</color>
+    <color name="cardBgColor">@color/white</color>
+    <color name="titleColor">@color/darker</color>
 </resources>
