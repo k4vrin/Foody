@@ -26,7 +26,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/lightMediumGray"
+            app:strokeColor="@color/strokeColor"
             app:strokeWidth="1dp">
 
             <!-- On selection mode the background of this constraint will change  -->
@@ -61,7 +61,7 @@
                     android:fontFamily="@font/courgette"
                     android:maxLines="2"
                     android:text="@{favoritesEntity.result.title}"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/titleColor"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +78,7 @@
                     android:layout_marginTop="12dp"
                     android:ellipsize="end"
                     android:maxLines="3"
-                    android:textColor="@color/darkGray"
+                    android:textColor="@color/descriptionColor"
                     app:layout_constraintEnd_toEndOf="@+id/favorite_title_textView"
                     app:layout_constraintStart_toStartOf="@+id/favorite_title_textView"
                     app:layout_constraintTop_toBottomOf="@+id/favorite_title_textView"

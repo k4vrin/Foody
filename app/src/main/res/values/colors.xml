@@ -40,6 +40,7 @@
 
     <!-- For Selection Mode -->
     <color name="statusBarColor">@color/primaryDarkColor</color>
+    <!--  Done programmatically in FavoriteAdapter  -->
     <color name="contextualStatusBarColor">@color/darker</color>
     <color name="contextualActionBarColor">@color/dark</color>
     <color name="actionBarBg">@color/primaryColor</color>
