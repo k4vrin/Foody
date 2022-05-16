@@ -21,36 +21,37 @@
     <color name="yellow">#FFC114</color>
     <color name="green">#00C980</color>
 
-    <!--  Light Mode  -->
 
-    <color name="bgColor">@color/lightGray</color>
+    <!--  Dark Mode  -->
 
-<!--  Custom Chip Style  -->
+    <color name="bgColor">@color/dark</color>
+
+    <!--  Custom Chip Style  -->
     <color name="checkedChipBg">#406200EA</color>
     <color name="ChipBg">@color/lightGray</color>
     <color name="checkedChipText">@color/primaryColor</color>
     <color name="ChipText">@color/darkGray</color>
 
     // Custom Card View Style
-    <color name="strokeColor">@color/lightMediumGray</color>
-    <color name="cardBgColor">@color/white</color>
-    <color name="titleColor">@color/darker</color>
+    <color name="strokeColor">@color/mediumGray</color>
+    <color name="cardBgColor">@color/darker</color>
+    <color name="titleColor">@color/mediumGray</color>
     <color name="cardBgLightColor">#1A6A1B9A</color>
-    <color name="descriptionColor">@color/darkGray</color>
+    <color name="descriptionColor">@color/mediumGray</color>
+
 
     <!-- For Selection Mode -->
-    <color name="statusBarColor">@color/primaryDarkColor</color>
+    <color name="statusBarColor">@color/black</color>
     <color name="contextualStatusBarColor">@color/darker</color>
     <color name="contextualActionBarColor">@color/dark</color>
-    <color name="actionBarBg">@color/primaryColor</color>
-
-<!--  Bottom Nav  -->
-
-    <color name="bottomNavBgColor">@color/white</color>
-    <color name="bottomNavItemColor">@color/darkGray</color>
-    <color name="bottomNavCheckedItemColor">@color/primaryColor</color>
+    <color name="actionBarBg">@color/darker</color>
 
 
+    <!--  Bottom Nav  -->
+
+    <color name="bottomNavBgColor">@color/darker</color>
+    <color name="bottomNavItemColor">@color/mediumGray</color>
+    <color name="bottomNavCheckedItemColor">@color/primaryLightColor</color>
 
 
 </resources>
