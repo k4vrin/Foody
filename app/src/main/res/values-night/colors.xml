@@ -25,6 +25,7 @@
     <!--  Dark Mode  -->
 
     <color name="bgColor">@color/dark</color>
+    <color name="placeHolderColor">@color/darker</color>
 
     <!--  Custom Chip Style  -->
     <color name="checkedChipBg">@color/dark</color>
