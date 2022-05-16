@@ -45,7 +45,8 @@ import kotlinx.coroutines.launch
  *    Hilt does not support retained fragments.
  */
 @AndroidEntryPoint
-class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {// import androidx.appcompat.widget.SearchView
+class RecipesFragment : Fragment(),
+    SearchView.OnQueryTextListener {// import androidx.appcompat.widget.SearchView
 
     /**
      * Warning: Even though the view model has an @Inject constructor,
@@ -172,12 +173,8 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {// import an
                     loadDataFromCache()
                     /** Load Data From Cache */
                     hideShimmerEffect()
-                    Snackbar.make(
-                        requireContext(),
-                        binding.root,
-                        response.message.toString(), // The message is handled by NetworkResult in MainViewModel
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    // The message is handled by NetworkResult in MainViewModel
+                    showSnackBar(message = response.message.toString())
                 }
                 is NetworkResult.Loading -> showShimmerEffect()
             }
@@ -211,18 +208,13 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {// import an
                     loadDataFromCache()
                     /** Load Data From Cache */
                     hideShimmerEffect()
-                    Snackbar.make(
-                        requireContext(),
-                        binding.root,
-                        response.message.toString(), // The message is handled by NetworkResult in MainViewModel
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    // The message is handled by NetworkResult in MainViewModel
+                    showSnackBar(message = response.message.toString())
                 }
                 is NetworkResult.Loading -> showShimmerEffect()
             }
         }
     }
-
 
 
     /**
@@ -247,11 +239,11 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {// import an
         }
         return true
     }
+
     // We don't use it because it's expensive for performance
     override fun onQueryTextChange(newText: String?): Boolean {
         return true
     }
-
 
 
     /**********************************************************************************************/
@@ -268,20 +260,25 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {// import an
                 binding.root,
                 "No Internet Connection",
                 Snackbar.LENGTH_SHORT
-            ).show()
+            ).setAction("Okay") {}
+                .show()
             // It should become online
             mRecipesViewModel.saveBackOnline(true)
             // Internet is back & we were not online
-        } else if (status && mRecipesViewModel.backOnline){
-            Snackbar.make(
-                requireContext(),
-                binding.root,
-                "We are back online",
-                Snackbar.LENGTH_SHORT
-            ).show()
+        } else if (status && mRecipesViewModel.backOnline) {
+            showSnackBar(message = "We are back online")
             // Prevent Snack bar to show again
             mRecipesViewModel.saveBackOnline(false)
         }
+    }
+
+    fun showSnackBar(message: String) {
+        Snackbar.make(
+            binding.root,
+            message,
+            Snackbar.LENGTH_SHORT
+        ).setAction("Okay") {}
+            .show()
     }
 
     override fun onDestroyView() {

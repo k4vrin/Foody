@@ -1,8 +1,10 @@
 package com.kavrin.foody.data.network
 
+import com.kavrin.foody.models.FoodJoke
 import com.kavrin.foody.models.FoodRecipe
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface FoodRecipesApi {
@@ -30,5 +32,17 @@ interface FoodRecipesApi {
     suspend fun searchRecipes(
         @QueryMap searchQueries: Map<String, String>
     ): Response<FoodRecipe>
+
+    /**
+     * Get food joke
+     *
+     * @param apiKey
+     *
+     * Food Joke end point
+     */
+    @GET("/food/jokes/random")
+    suspend fun getFoodJoke(
+        @Query("apiKey") apiKey: String
+    ): Response<FoodJoke>
 
 }

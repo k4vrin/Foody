@@ -5,11 +5,12 @@
       <map>
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/drawable/gradient_overlay.xml" value="0.1" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/drawable/ic_error_placeholder.xml" value="0.2385" />
+        <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/drawable/ic_food_joke_background_dark.xml" value="0.1175" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/activity_details.xml" value="0.176" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/favorite_recipes_row_layout.xml" value="0.4" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_favorite_recipes.xml" value="0.4" />
-        <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_food_joke.xml" value="0.2028985507246377" />
+        <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_food_joke.xml" value="0.264" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_ingredients.xml" value="0.18931159420289856" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_instructions.xml" value="0.18931159420289856" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/layout/fragment_overview.xml" value="0.536" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/menu/details_menu.xml" value="0.23229166666666667" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/menu/favorite_recipes_menu.xml" value="0.23229166666666667" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/menu/favorites_contextual_menu.xml" value="0.23229166666666667" />
+        <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/menu/food_joke_menu.xml" value="0.23229166666666667" />
         <entry key="..\:/Projects/Stevdza-San/Foody/app/src/main/res/menu/recipes_menu.xml" value="0.23229166666666667" />
       </map>
     </option>

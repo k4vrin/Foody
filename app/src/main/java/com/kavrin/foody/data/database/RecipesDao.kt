@@ -2,6 +2,7 @@ package com.kavrin.foody.data.database
 
 import androidx.room.*
 import com.kavrin.foody.data.database.entities.FavoriteRecipesEntity
+import com.kavrin.foody.data.database.entities.FoodJokeEntity
 import com.kavrin.foody.data.database.entities.RecipesEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -28,4 +29,11 @@ interface RecipesDao {
 
     @Query("DELETE FROM favorite_recipes_table")
     suspend fun deleteAllFavoriteRecipes()
+
+    /********************************** Food Joke ***************************************/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFoodJoke(foodJokeEntity: FoodJokeEntity)
+
+    @Query(value = "SELECT * FROM food_joke_table ORDER BY RANDOM() LIMIT 1") // We don't need this random. just for reference
+    fun readFoodJoke(): Flow<List<FoodJokeEntity>>
 }

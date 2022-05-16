@@ -1,6 +1,7 @@
 package com.kavrin.foody.data
 
 import com.kavrin.foody.data.network.FoodRecipesApi
+import com.kavrin.foody.models.FoodJoke
 import com.kavrin.foody.models.FoodRecipe
 import retrofit2.Response
 import javax.inject.Inject
@@ -53,6 +54,17 @@ class RemoteDataSource @Inject constructor(
      */
     suspend fun searchRecipes(searchQueries: Map<String, String>): Response<FoodRecipe> {
         return foodRecipesApi.searchRecipes(searchQueries = searchQueries)
+    }
+
+    /**
+     * Get food joke
+     *
+     * this function will be provided for Repository class
+     * it consumes searchRecipes that is provided from foodRecipesApi by Hilt
+     *
+     */
+    suspend fun getFoodJoke(apiKey: String): Response<FoodJoke> {
+        return foodRecipesApi.getFoodJoke(apiKey)
     }
 
 }
