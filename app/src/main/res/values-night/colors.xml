@@ -26,6 +26,7 @@
 
     <color name="bgColor">@color/dark</color>
     <color name="placeHolderColor">@color/darker</color>
+    <color name="itemColor">@color/lightMediumGray</color>
 
     <!--  Custom Chip Style  -->
     <color name="checkedChipBg">@color/dark</color>

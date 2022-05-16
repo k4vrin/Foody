@@ -25,6 +25,7 @@
 
     <color name="bgColor">@color/lightGray</color>
     <color name="placeHolderColor">@color/mediumGray</color>
+    <color name="itemColor">@color/darkGray</color>
 
 <!--  Custom Chip Style  -->
     <color name="checkedChipBg">#406200EA</color>

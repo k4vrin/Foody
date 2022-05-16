@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/detailsLayout"
+    android:background="@color/bgColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.DetailsActivity">
@@ -11,6 +12,7 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/actionBarBg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,10 +25,10 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             style="@style/CustomTabLayoutStyle"
-            app:tabTextAppearance="@style/CustomTabTextStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:tabTextAppearance="@style/CustomTabTextStyle" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
