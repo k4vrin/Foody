@@ -16,11 +16,13 @@
         <activity
             android:name=".ui.DetailsActivity"
             android:label="Details"
+            android:screenOrientation="portrait"
             android:theme="@style/DetailsActivityStyle"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:theme="@style/SplashScreenStyle"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
