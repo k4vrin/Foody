@@ -31,4 +31,13 @@
     <color name="strokeColor">@color/lightMediumGray</color>
     <color name="cardBgColor">@color/white</color>
     <color name="titleColor">@color/darker</color>
+
+    <!-- For Selection Mode -->
+    <color name="statusBarColor">@color/primaryColor</color>
+    <color name="contextualStatusBarColor">@color/darker</color>
+    <color name="contextualActionBarColor">@color/dark</color>
+
+    <color name="cardBgLightColor">#1A6A1B9A</color>
+
+
 </resources>

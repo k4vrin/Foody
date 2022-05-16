@@ -22,7 +22,8 @@ class FavoriteRecipesFragment : Fragment() {
 
     private val mMainViewModel: MainViewModel by viewModels()
 
-    private val mAdapter: FavoritesAdapter by lazy { FavoritesAdapter() }
+    // Pass activity and MainViewModel to adapter
+    private val mAdapter: FavoritesAdapter by lazy { FavoritesAdapter(requireActivity(), mMainViewModel) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,5 +54,6 @@ class FavoriteRecipesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        mAdapter.clearContextualActionMode()
     }
 }
