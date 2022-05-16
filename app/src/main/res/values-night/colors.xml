@@ -27,10 +27,10 @@
     <color name="bgColor">@color/dark</color>
 
     <!--  Custom Chip Style  -->
-    <color name="checkedChipBg">#406200EA</color>
-    <color name="ChipBg">@color/lightGray</color>
-    <color name="checkedChipText">@color/primaryColor</color>
-    <color name="ChipText">@color/darkGray</color>
+    <color name="checkedChipBg">@color/dark</color>
+    <color name="ChipBg">#1D242B</color>
+    <color name="checkedChipText">@color/lightGray</color>
+    <color name="ChipText">@color/lightGray</color>
 
     // Custom Card View Style
     <color name="strokeColor">@color/mediumGray</color>
