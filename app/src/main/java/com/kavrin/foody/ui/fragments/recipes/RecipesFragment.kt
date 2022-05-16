@@ -255,13 +255,7 @@ class RecipesFragment : Fragment(),
      */
     private fun showNetworkStatus(status: Boolean) {
         if (!status) {
-            Snackbar.make(
-                requireContext(),
-                binding.root,
-                "No Internet Connection",
-                Snackbar.LENGTH_SHORT
-            ).setAction("Okay") {}
-                .show()
+            showSnackBar(message = "No Internet Connection")
             // It should become online
             mRecipesViewModel.saveBackOnline(true)
             // Internet is back & we were not online
@@ -272,7 +266,7 @@ class RecipesFragment : Fragment(),
         }
     }
 
-    fun showSnackBar(message: String) {
+    private fun showSnackBar(message: String) {
         Snackbar.make(
             binding.root,
             message,

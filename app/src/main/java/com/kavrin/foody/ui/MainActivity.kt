@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // For Splash Screen
+        setTheme(R.style.Theme_Foody)
         // Setup binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
