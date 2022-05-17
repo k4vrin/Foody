@@ -59,13 +59,13 @@ class DetailsActivity : AppCompatActivity() {
         val resultBundle = Bundle()
         resultBundle.putParcelable(RECIPES_RESULT_KEY, args.result)
         // Initialize PagerAdapter
-        val adapter = PagerAdapter(
+        val pagerAdapter = PagerAdapter(
             resultBundle = resultBundle,
             fragments = fragments,
             fa = this
         )
         // Set ViewPager adapter
-        binding.viewPager.adapter = adapter
+        binding.viewPager.adapter = pagerAdapter
         // Connect ViewPager with tabLayout
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = titles[position]

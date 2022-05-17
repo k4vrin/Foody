@@ -60,25 +60,6 @@ class RecipesRowBinding {
             }
         }
 
-        /**
-         * Set number of likes
-         *
-         * @param view
-         * @param likes
-         *
-         * Map likes from int to string and set text view
-         */
-        @BindingAdapter("setNumberOfLikes")
-        @JvmStatic
-        fun setNumberOfLikes(view: TextView, likes: Int) {
-            view.text = likes.toString()
-        }
-
-        @BindingAdapter("setNumberOfMinutes")
-        @JvmStatic
-        fun setNumberOfMinutes(view: TextView, readyInMinutes: Int) {
-            view.text = readyInMinutes.toString()
-        }
 
         /**
          * Apply vegan color

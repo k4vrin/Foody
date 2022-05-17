@@ -124,7 +124,7 @@
 
                 <TextView
                     android:id="@+id/heart_textView"
-                    setNumberOfLikes="@{result.aggregateLikes}"
+                    android:text="@{String.valueOf(result.aggregateLikes)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -137,7 +137,7 @@
 
                 <TextView
                     android:id="@+id/clock_textView"
-                    setNumberOfMinutes="@{result.readyInMinutes}"
+                    android:text="@{String.valueOf(result.readyInMinutes)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
